@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Page Object for Wikipedia article page
  */
-public class WikiArticlePage extends BasePage {
+public class WikiArticleWebPage extends BaseWebPage {
 
     // Main article elements using @FindBy annotations
     @FindBy(id = "firstHeading")
@@ -40,11 +40,11 @@ public class WikiArticlePage extends BasePage {
     @FindBy(className = "references")
     private WebElement references;
 
-    public WikiArticlePage(WebDriver driver, WebDriverWait wait) {
+    public WikiArticleWebPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
     }
 
-    public WikiArticlePage(WebDriver driver) {
+    public WikiArticleWebPage(WebDriver driver) {
         super(driver);
     }
 

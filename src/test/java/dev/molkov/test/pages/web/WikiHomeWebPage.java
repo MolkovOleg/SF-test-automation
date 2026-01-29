@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Page Object for Wikipedia home page
  */
-public class WikiHomePage extends BasePage {
+public class WikiHomeWebPage extends BaseWebPage {
 
     @FindBy(id = "searchInput")
     private WebElement searchInput;
@@ -26,7 +26,7 @@ public class WikiHomePage extends BasePage {
     @FindBy(id = "n-randompage")
     private WebElement randomArticleLink;
 
-    public WikiHomePage(WebDriver driver, WebDriverWait wait) {
+    public WikiHomeWebPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
     }
 
@@ -36,7 +36,7 @@ public class WikiHomePage extends BasePage {
      * @param searchTerm term to search for
      * @return WikiArticlePage object
      */
-    public WikiArticlePage searchFor(String searchTerm) {
+    public WikiArticleWebPage searchFor(String searchTerm) {
         logger.info("Searching for: " + searchTerm);
 
         try {
@@ -51,7 +51,7 @@ public class WikiHomePage extends BasePage {
             Thread.currentThread().interrupt();
         }
 
-        return new WikiArticlePage(driver, wait);
+        return new WikiArticleWebPage(driver, wait);
     }
 
     /**
@@ -99,7 +99,7 @@ public class WikiHomePage extends BasePage {
      *
      * @return WikiArticlePage object
      */
-    public WikiArticlePage openRandomArticle() {
+    public WikiArticleWebPage openRandomArticle() {
         logger.info("Opening random article");
         try {
             click(randomArticleLink);
@@ -113,7 +113,7 @@ public class WikiHomePage extends BasePage {
                 Thread.currentThread().interrupt();
             }
         }
-        return new WikiArticlePage(driver, wait);
+        return new WikiArticleWebPage(driver, wait);
     }
 
     /**

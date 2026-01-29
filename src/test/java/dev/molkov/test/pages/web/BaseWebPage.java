@@ -13,19 +13,19 @@ import java.util.logging.Logger;
 /**
  * Base Page Object class which is universal for all web pages
  */
-public class BasePage {
+public class BaseWebPage {
 
     protected final Logger logger = Logger.getLogger(getClass().getName());
     protected WebDriver driver;
     protected WebDriverWait wait;
 
-    public BasePage(WebDriver driver, WebDriverWait wait) {
+    public BaseWebPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
         PageFactory.initElements(driver, this);
     }
 
-    public BasePage(WebDriver driver) {
+    public BaseWebPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         PageFactory.initElements(driver, this);
