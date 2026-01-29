@@ -1,6 +1,5 @@
 package dev.molkov.test.utils;
 
-
 import dev.molkov.test.config.BaseConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -29,11 +28,12 @@ public class WebDriverFactory {
         WebDriver driver;
 
         switch (browserName) {
-            case "safari":
-                driver = createSafariDriver(headless);
-                break;
             case "firefox":
                 driver = createFirefoxDriver(headless);
+                break;
+            case "safari":
+            default:
+                driver = createSafariDriver(headless);
                 break;
         }
 
@@ -65,7 +65,6 @@ public class WebDriverFactory {
 
         return new FirefoxDriver(options);
     }
-
 
     // Other configurations for WebDriver
     private static void configureDriver(WebDriver driver) {

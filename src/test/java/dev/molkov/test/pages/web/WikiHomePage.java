@@ -38,18 +38,21 @@ public class WikiHomePage extends BasePage {
      */
     public WikiArticlePage searchFor(String searchTerm) {
         logger.info("Searching for: " + searchTerm);
-        sendKeys(searchInput, searchTerm);
-        searchInput.sendKeys(Keys.ENTER);
 
         try {
-            Thread.sleep(2000); // Wait for navigation
+            // Wait for search input to be ready
+            waitForElementVisible(searchInput);
+            sendKeys(searchInput, searchTerm);
+            searchInput.sendKeys(Keys.ENTER);
+
+            // Wait for navigation to complete
+            Thread.sleep(3000); // Longer wait for Safari
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
         return new WikiArticlePage(driver, wait);
     }
-
 
     /**
      * Check if search box is visible

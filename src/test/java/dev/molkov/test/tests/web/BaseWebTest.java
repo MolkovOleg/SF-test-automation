@@ -7,50 +7,58 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 
 import java.time.Duration;
 
 /**
- * Base test class for all web dev.molkov.test.tests
+ * Base test class for dev.molkov.test.tests.web
+ * <p>
  * Handles WebDriver initialization and cleanup functionality
  */
 public abstract class BaseWebTest {
 
     protected static final Logger logger = LoggerFactory.getLogger(BaseWebTest.class);
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    protected static WebDriver driver;
+    protected static WebDriverWait wait;
 
-    @BeforeMethod(alwaysRun = true)
-    public void setUp() {
-        logger.info("Setting up web test settings");
+    @BeforeClass(alwaysRun = true)
+    public void setUpClass() {
+        logger.info("Setting up web test settings for test class");
 
         driver = WebDriverFactory.createWebDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(BaseConfig.getWebExplicitWait()));
-        String baseUrl = BaseConfig.getWebBaseUrl();
 
-        logger.info("Setting up web test URL: {}", baseUrl);
-
-        driver.get(baseUrl);
-
-        logger.info("Web test settings completed");
+        logger.info("Web test settings completed - Firefox will stay open for all tests");
     }
 
     @AfterMethod
-    public void tearDown(ITestResult result) {
-        if (driver != null) {
-            if (!result.isSuccess()) {
-                logger.error("Web test failed: {}", result.getName());
-            }
+    public void afterTest(ITestResult result) {
+        if (!result.isSuccess()) {
+            logger.error("Web test failed: {}", result.getName());
         }
-        logger.info("Closing browser...");
-        driver.quit();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void tearDownClass() {
+        if (driver != null) {
+            logger.info("Closing browser after all tests completed...");
+            driver.quit();
+        }
     }
 
     protected void toHomePage() {
         String baseUrl = BaseConfig.getWebBaseUrl();
         driver.get(baseUrl);
+
+        // Wait for page to load completely (especially important for Safari)
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     protected String getCurrentUrl() {
