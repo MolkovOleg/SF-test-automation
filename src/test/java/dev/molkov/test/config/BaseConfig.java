@@ -49,8 +49,7 @@ public class BaseConfig {
 
     public static boolean headlessMode() {
         return Boolean.parseBoolean(
-                System.getProperty("headless", getProperty("web.headless", "false"))
-        );
+                System.getProperty("headless", getProperty("web.headless", "false")));
     }
 
     public static int getWebImplicitWait() {
@@ -65,6 +64,44 @@ public class BaseConfig {
         return Integer.parseInt(getProperty("web.page.load.timeout", "30"));
     }
 
+    /**
+     * Configuration для Mobile Testing (Appium)
+     */
+    public static String getAppiumServerUrl() {
+        return getProperty("appium.server.url", "http://127.0.0.1:4723");
+    }
+
+    public static String getMobilePlatformName() {
+        return getProperty("mobile.platform.name", "Android");
+    }
+
+    public static String getMobileDeviceName() {
+        return getProperty("mobile.device.name", "Android Emulator");
+    }
+
+    public static String getMobileAppPackage() {
+        return getProperty("mobile.app.package", "org.wikipedia");
+    }
+
+    public static String getMobileAppActivity() {
+        return getProperty("mobile.app.activity", "org.wikipedia.main.MainActivity");
+    }
+
+    public static String getMobileAutomationName() {
+        return getProperty("mobile.automation.name", "UiAutomator2");
+    }
+
+    public static int getMobileImplicitWait() {
+        return Integer.parseInt(getProperty("mobile.implicit.wait", "10"));
+    }
+
+    public static int getMobileExplicitWait() {
+        return Integer.parseInt(getProperty("mobile.explicit.wait", "15"));
+    }
+
+    public static int getMobileCommandTimeout() {
+        return Integer.parseInt(getProperty("mobile.new.command.timeout", "300"));
+    }
 
     /**
      * Get property value from src/test/resources/config.properties
