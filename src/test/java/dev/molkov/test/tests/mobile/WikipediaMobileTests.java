@@ -95,4 +95,26 @@ public class WikipediaMobileTests extends BaseMobileTest {
 
         logger.info("Test passed: Clear search");
     }
+
+    /**
+     * Тест 5: Проверка навигации назад
+     */
+    @Test(priority = 5, groups = { "mobile", "regression" }, description = "Test back navigation from article")
+    public void testBackNavigation() {
+        logger.info("Starting test: Back navigation");
+
+        WikipediaSearchPage searchPage = new WikipediaSearchPage(driver, wait);
+        searchPage.search("JUnit");
+        searchPage.clickFirstSearchResult();
+
+        WikipediaArticlePage articlePage = new WikipediaArticlePage(driver, wait);
+        Assert.assertTrue(articlePage.isArticleDisplayed(), "Article should be displayed");
+
+        articlePage.goBack();
+
+        Assert.assertTrue(searchPage.areSearchResultsDisplayed(),
+                "Should navigate back to search results");
+
+        logger.info("Test passed: Back navigation");
+    }
 }

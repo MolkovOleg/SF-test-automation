@@ -28,7 +28,6 @@
         <!-- Plugin versions -->
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.2.3</maven.surefire.plugin.version>
-
         <suiteFile>src/test/resources/testng-all.xml</suiteFile>
 
     </properties>

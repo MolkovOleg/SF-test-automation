@@ -114,6 +114,7 @@ SF-Test-course-project/
 6. ✅ `testFeaturedContentOnMainPage` - Проверка контента главной страницы
 7. ✅ `testArticleReferencesSection` - Проверка раздела ссылок
 
+
 #### Команды запуска:
 
 ```bash
@@ -159,6 +160,9 @@ mvn test -DsuiteXmlFile=src/test/resources/testng-mobile.xml -Dgroups=smoke
 # Запуск конкретного теста (например, проверка открытия статьи)
 mvn test -DsuiteXmlFile=src/test/resources/testng-mobile.xml -Dtest=WikipediaMobileTests#testOpenJavaArticle
 ```
+
+## Скриншот результатов всех тестов
+<img src="screenshots/tesng-all.png" alt="Error Log" width="400"/>
 
 ---
 

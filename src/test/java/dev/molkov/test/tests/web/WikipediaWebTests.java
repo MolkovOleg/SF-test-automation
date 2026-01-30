@@ -232,10 +232,10 @@ public class WikipediaWebTests extends BaseWebTest {
                 Assert.assertTrue(articlePage.isArticleContentDisplayed(),
                                 "Article should have content");
 
-                // Count references
+                // Count references (exact count is fragile, so we check for a minimum expected)
                 int refCount = articlePage.getReferencesCount();
-                Assert.assertEquals(refCount, 389,
-                                String.format("Article should have references, found: %d", refCount));
+                Assert.assertTrue(refCount > 300,
+                                String.format("Article should have many references, found: %d", refCount));
 
                 logger.info("✓ Test passed: Found {} references in article", refCount);
         }
