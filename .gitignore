@@ -41,8 +41,12 @@ nbdist/
 
 # Test output
 test-output/
-*.png
-*.jpg
+# *.png
+# *.jpg
+
+# Allow images in screenshots folder
+!screenshots/*.png
+!screenshots/*.jpg
 
 # OS generated files
 .DS_Store
