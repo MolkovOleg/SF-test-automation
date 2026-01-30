@@ -28,6 +28,9 @@
         <!-- Plugin versions -->
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.2.3</maven.surefire.plugin.version>
+        
+        <!-- Test suite file -->
+        <suiteFile>src/test/resources/testng-web.xml</suiteFile>
     </properties>
 
     <dependencies>
@@ -93,7 +96,7 @@
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng-web.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                     <systemPropertyVariables>

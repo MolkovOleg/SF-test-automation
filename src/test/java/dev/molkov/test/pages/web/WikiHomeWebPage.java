@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Page Object for Wikipedia home page
+ * Page Object для главной страницы Wikipedia
  */
 public class WikiHomeWebPage extends BaseWebPage {
 
@@ -31,22 +31,22 @@ public class WikiHomeWebPage extends BaseWebPage {
     }
 
     /**
-     * Perform search on Wikipedia and return Article page
+     * Выполнить поиск на Wikipedia и вернуть страницу статьи
      *
-     * @param searchTerm term to search for
-     * @return WikiArticlePage object
+     * @param searchTerm термин для поиска
+     * @return объект WikiArticlePage
      */
     public WikiArticleWebPage searchFor(String searchTerm) {
         logger.info("Searching for: " + searchTerm);
 
         try {
-            // Wait for search input to be ready
+            // Ожидание готовности поля поиска
             waitForElementVisible(searchInput);
             sendKeys(searchInput, searchTerm);
             searchInput.sendKeys(Keys.ENTER);
 
-            // Wait for navigation to complete
-            Thread.sleep(3000); // Longer wait for Safari
+            // Ожидание завершения навигации
+            Thread.sleep(3000); // Увеличенное ожидание для Safari
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -55,9 +55,9 @@ public class WikiHomeWebPage extends BaseWebPage {
     }
 
     /**
-     * Check if search box is visible
+     * Проверить видимость поля поиска
      *
-     * @return true if search input is displayed
+     * @return true если поле поиска отображается
      */
     public boolean isSearchBoxVisible() {
         try {
@@ -68,18 +68,18 @@ public class WikiHomeWebPage extends BaseWebPage {
     }
 
     /**
-     * Check if search input is available (alias for isSearchBoxVisible)
+     * Проверить доступность поля поиска (псевдоним для isSearchBoxVisible)
      *
-     * @return true if search input is displayed
+     * @return true если поле поиска отображается
      */
     public boolean isSearchAvailable() {
         return isSearchBoxVisible();
     }
 
     /**
-     * Check if Wikipedia logo is displayed
+     * Проверить отображение логотипа Wikipedia
      *
-     * @return true if logo is visible
+     * @return true если логотип видим
      */
     public boolean isLogoDisplayed() {
         try {
@@ -89,21 +89,21 @@ public class WikiHomeWebPage extends BaseWebPage {
                 return logo.isDisplayed();
             } catch (Exception e2) {
                 logger.info("Standard logos not found, checking for any logo");
-                return true; // Assume logo exists if we can load the page
+                return true; // Предполагаем наличие логотипа, если страница загружается
             }
         }
     }
 
     /**
-     * Open random Wikipedia article
+     * Открыть случайную статью Wikipedia
      *
-     * @return WikiArticlePage object
+     * @return объект WikiArticlePage
      */
     public WikiArticleWebPage openRandomArticle() {
         logger.info("Opening random article");
         try {
             click(randomArticleLink);
-            Thread.sleep(2000); // Wait for navigation
+            Thread.sleep(2000); // Ожидание навигации
         } catch (Exception e) {
             logger.info("Random article link not found, using fallback");
             driver.get("https://en.wikipedia.org/wiki/Special:Random");
@@ -117,9 +117,9 @@ public class WikiHomeWebPage extends BaseWebPage {
     }
 
     /**
-     * Check if home page is loaded
+     * Проверить загрузку главной страницы
      *
-     * @return true if home page elements are present
+     * @return true если элементы главной страницы присутствуют
      */
     public boolean isPageLoaded() {
         return isSearchAvailable() && isLogoDisplayed();

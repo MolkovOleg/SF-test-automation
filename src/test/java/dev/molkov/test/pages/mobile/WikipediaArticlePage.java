@@ -4,8 +4,6 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Page Object для страницы статьи Wikipedia
@@ -13,15 +11,15 @@ import org.slf4j.LoggerFactory;
 public class WikipediaArticlePage extends BaseMobilePage {
 
     // Кнопка меню на страницы статьи
-    @AndroidFindBy(id = "page_toolbar_button_show_overflow_men")
+    @AndroidFindBy(id = "org.wikipedia:id/page_toolbar_button_show_overflow_menu")
     private WebElement articleMenuButton;
 
-    // ArticleHeader со статьей
-    @AndroidFindBy(id = "view_wiki_article_header")
-    private WebElement articleHeader;
+    // Название статьи (берем первый TextView внутри WebView)
+    @AndroidFindBy(xpath = "//android.webkit.WebView/android.view.View/android.view.View[1]/android.view.View[1]/android.widget.TextView[1]")
+    private WebElement articleTitle;
 
     // WebView со статьей
-    @AndroidFindBy(id = "page_web_view")
+    @AndroidFindBy(className = "android.webkit.WebView")
     private WebElement articleWebView;
 
     public WikipediaArticlePage(AndroidDriver driver, WebDriverWait wait) {
@@ -33,8 +31,10 @@ public class WikipediaArticlePage extends BaseMobilePage {
      */
     public boolean isArticleDisplayed() {
         try {
+            logger.info("Verifying article is displayed");
             pause(2000);
-            return isDisplayed(articleWebView) || isDisplayed(articleHeader);
+            dismissPopupsIfPresent(); // Обработка всплывающих окон при первом открытии статьи
+            return isDisplayed(articleWebView) || isDisplayed(articleTitle);
         } catch (Exception ex) {
             logger.warn("Article is not displayed", ex);
             return false;
@@ -46,8 +46,8 @@ public class WikipediaArticlePage extends BaseMobilePage {
      */
     public String getArticleTitle() {
         try {
-            if (isDisplayed(articleHeader)) {
-                return articleHeader.getText();
+            if (isDisplayed(articleTitle)) {
+                return articleTitle.getText();
             }
             return "";
         } catch (Exception ex) {
@@ -57,11 +57,12 @@ public class WikipediaArticlePage extends BaseMobilePage {
     }
 
     /**
-     * Проверить что название статьи содержит с поисковым текстом
+     * Проверить что название статьи содержит ожидаемый текст
      */
     public boolean isArticleTitleContains(String expectedTitle) {
-        isDisplayed(articleWebView);
-        return articleWebView.getText().contains(expectedTitle);
+        String title = getArticleTitle();
+        logger.info("Actual title: '{}', expected to contain: '{}'", title, expectedTitle);
+        return title.toLowerCase().contains(expectedTitle.toLowerCase());
     }
 
     /**

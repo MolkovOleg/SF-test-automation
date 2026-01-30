@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 
 /**
- * Factory for creating WebDriver instances
+ * Фабрика для создания экземпляров WebDriver
  */
 public class WebDriverFactory {
 
@@ -42,7 +42,7 @@ public class WebDriverFactory {
 
     }
 
-    // Configuration driver for Safari browser
+    // Настройка драйвера для браузера Safari
     private static WebDriver createSafariDriver(boolean headless) {
         WebDriverManager.safaridriver().setup();
         SafariOptions options = new SafariOptions();
@@ -54,7 +54,7 @@ public class WebDriverFactory {
         return new SafariDriver(options);
     }
 
-    // Configuration driver for Firefox browser
+    // Настройка драйвера для браузера Firefox
     private static WebDriver createFirefoxDriver(boolean headless) {
         WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
@@ -66,7 +66,7 @@ public class WebDriverFactory {
         return new FirefoxDriver(options);
     }
 
-    // Other configurations for WebDriver
+    // Дополнительные настройки для WebDriver
     private static void configureDriver(WebDriver driver) {
         driver.manage().timeouts().implicitlyWait(
                 Duration.ofSeconds(BaseConfig.getWebImplicitWait()));

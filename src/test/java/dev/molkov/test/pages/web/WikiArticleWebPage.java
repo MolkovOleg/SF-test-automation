@@ -8,11 +8,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 /**
- * Page Object for Wikipedia article page
+ * Page Object для страницы статьи Wikipedia
  */
 public class WikiArticleWebPage extends BaseWebPage {
 
-    // Main article elements using @FindBy annotations
+    // Основные элементы статьи с использованием аннотаций @FindBy
     @FindBy(id = "firstHeading")
     private WebElement articleTitle;
 
@@ -48,11 +48,10 @@ public class WikiArticleWebPage extends BaseWebPage {
         super(driver);
     }
 
-
     /**
-     * Get article content text
+     * Получить текст содержимого статьи
      *
-     * @return main article content
+     * @return основное содержимое статьи
      */
     public String getArticleContent() {
         try {
@@ -64,28 +63,28 @@ public class WikiArticleWebPage extends BaseWebPage {
     }
 
     /**
-     * Get current URL
+     * Получить текущий URL
      *
-     * @return page URL
+     * @return URL страницы
      */
     public String getUrl() {
         return getCurrentUrl();
     }
 
     /**
-     * Check if URL contains specific text
+     * Проверить, содержит ли URL указанный текст
      *
-     * @param urlPart partial URL to check
-     * @return true if URL contains the text
+     * @param urlPart часть URL для проверки
+     * @return true если URL содержит текст
      */
     public boolean urlContains(String urlPart) {
         return getCurrentUrl().contains(urlPart);
     }
 
     /**
-     * Check if article title is displayed
+     * Проверить отображение заголовка статьи
      *
-     * @return true if title element exists and is displayed
+     * @return true если элемент заголовка существует и отображается
      */
     public boolean isArticleTitleDisplayed() {
         try {
@@ -96,9 +95,9 @@ public class WikiArticleWebPage extends BaseWebPage {
     }
 
     /**
-     * Check if article content is displayed
+     * Проверить отображение содержимого статьи
      *
-     * @return true if content element exists and is displayed
+     * @return true если элемент содержимого существует и отображается
      */
     public boolean isArticleContentDisplayed() {
         try {
@@ -109,9 +108,9 @@ public class WikiArticleWebPage extends BaseWebPage {
     }
 
     /**
-     * Get count of references in article
+     * Получить количество ссылок в статье
      *
-     * @return number of references found
+     * @return количество найденных ссылок
      */
     public int getReferencesCount() {
         try {

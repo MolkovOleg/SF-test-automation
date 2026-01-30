@@ -76,7 +76,7 @@ public class BaseConfig {
     }
 
     public static String getMobileDeviceName() {
-        return getProperty("mobile.device.name", "Android Emulator");
+        return getProperty("mobile.device.name", "Android_Emulator");
     }
 
     public static String getMobileAppPackage() {

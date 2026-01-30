@@ -14,9 +14,9 @@ import org.testng.annotations.BeforeClass;
 import java.time.Duration;
 
 /**
- * Base test class for dev.molkov.test.tests.web
+ * Базовый класс для всех веб-тестов
  * <p>
- * Handles WebDriver initialization and cleanup functionality
+ * Управляет инициализацией и очисткой WebDriver
  */
 public abstract class BaseWebTest {
 
@@ -53,7 +53,7 @@ public abstract class BaseWebTest {
         String baseUrl = BaseConfig.getWebBaseUrl();
         driver.get(baseUrl);
 
-        // Wait for page to load completely (especially important for Safari)
+        // Ожидание полной загрузки страницы (особенно важно для Safari)
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

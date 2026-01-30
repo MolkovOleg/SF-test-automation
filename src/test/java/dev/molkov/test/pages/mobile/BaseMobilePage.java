@@ -146,7 +146,7 @@ public abstract class BaseMobilePage {
                 pause(500);
             }
         } catch (Exception ex) {
-            logger.error("No popups");
+            logger.info("All popups closed");
         }
     }
 }

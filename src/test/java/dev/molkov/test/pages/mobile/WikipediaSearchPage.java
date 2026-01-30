@@ -14,22 +14,20 @@ import java.util.stream.Collectors;
  */
 public class WikipediaSearchPage extends BaseMobilePage {
 
-    // Контейнер поиска: ищем по ID или по тексту "Search Wikipedia"
-    @AndroidFindBy(id = "search_container")
+    // Контейнер поиска на главном экране
+    @AndroidFindBy(id = "org.wikipedia:id/search_container")
     private WebElement searchContainer;
 
-    // Поле ввода: ищем по ID или по тексту "Search…" или классу
-    // AutoCompleteTextView
-    @AndroidFindBy(id = "search_src_text")
+    // Поле ввода поиска
+    @AndroidFindBy(id = "org.wikipedia:id/search_src_text")
     private WebElement searchInput;
 
-    // Результаты: ищем любой TextView который может быть заголовком (самый широкий
-    // поиск)
-    @AndroidFindBy(id = "page_list_item_title")
+    // Результаты: ищем внутри контейнера результатов Compose-элементы
+    @AndroidFindBy(xpath = "//android.widget.FrameLayout[@resource-id='org.wikipedia:id/fragment_search_results']//android.view.View[@clickable='true']/android.widget.TextView[1]")
     private List<WebElement> searchResultTitles;
 
-    // Кнопка вкладки поиска
-    @AndroidFindBy(id = "nav_tab_search")
+    // Кнопка вкладки поиска (внизу)
+    @AndroidFindBy(id = "org.wikipedia:id/nav_tab_search")
     private WebElement searchTabButton;
 
     public WikipediaSearchPage(AndroidDriver driver, WebDriverWait wait) {
@@ -42,26 +40,39 @@ public class WikipediaSearchPage extends BaseMobilePage {
      * @return true если контейнер поиска отображается
      */
     public boolean isSearchContainerDisplayed() {
-        return isDisplayed(searchContainer);
+        return isDisplayed(searchContainer) || isDisplayed(searchInput);
     }
 
     /**
      * Открыть поиск нажатием на контейнер
      */
     public void openSearchTab() {
+        if (isDisplayed(searchInput)) {
+            logger.info("Search input is already displayed");
+            return;
+        }
+
         logger.info("Opening search tab");
-        dismissPopupsIfPresent(); // очищаем возможные онбординги
-        safeClick(searchContainer);
+        dismissPopupsIfPresent();
+
+        if (isDisplayed(searchContainer)) {
+            safeClick(searchContainer);
+        } else if (isDisplayed(searchTabButton)) {
+            safeClick(searchTabButton);
+        }
+
         pause(1000);
-        dismissPopupsIfPresent(); // очищаем возможные онбординги
     }
 
     /**
-     * Ввести текст поиска
+     * Ввести текст поиска с предварительным кликом для фокуса
      */
     public void enterSearchInput(String text) {
         logger.info("Entering search input: {}", text);
-        safeSendKeys(searchInput, text);
+        waitForVisibility(searchInput);
+        safeClick(searchInput); // Клик для активации поля
+        searchInput.clear();
+        searchInput.sendKeys(text);
         pause(1000);
     }
 
@@ -167,6 +178,5 @@ public class WikipediaSearchPage extends BaseMobilePage {
             logger.warn("Error while clearing search input", ex);
         }
     }
-
 
 }

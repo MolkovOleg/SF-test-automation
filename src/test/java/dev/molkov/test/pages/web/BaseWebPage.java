@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.util.logging.Logger;
 
 /**
- * Base Page Object class which is universal for all web pages
+ * Базовый класс Page Object, универсальный для всех веб-страниц
  */
 public class BaseWebPage {
 
@@ -40,11 +40,11 @@ public class BaseWebPage {
     }
 
     /**
-     * Send keys with retry mechanism for Safari compatibility
+     * Отправка текста с механизмом повторных попыток для совместимости с Safari
      * 
-     * @param element    WebElement to send keys to
-     * @param text       Text to send
-     * @param maxRetries Maximum number of retry attempts
+     * @param element    Элемент для ввода текста
+     * @param text       Текст для ввода
+     * @param maxRetries Максимальное количество попыток
      */
     protected void sendKeysWithRetry(WebElement element, String text, int maxRetries) {
         int attempts = 0;
@@ -53,15 +53,15 @@ public class BaseWebPage {
                 WebElement visibleElement = waitForElementVisible(element);
                 visibleElement.clear();
                 visibleElement.sendKeys(text);
-                return; // Success - exit
+                return; // Успешно - выход
             } catch (org.openqa.selenium.StaleElementReferenceException e) {
                 attempts++;
                 logger.warning("StaleElementReferenceException caught, retry attempt " + attempts + "/" + maxRetries);
                 if (attempts >= maxRetries) {
-                    throw e; // Re-throw if max retries reached
+                    throw e; // Повторный выброс исключения при достижении максимума попыток
                 }
                 try {
-                    Thread.sleep(500); // Small delay before retry
+                    Thread.sleep(500); // Небольшая задержка перед повторной попыткой
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                 }
@@ -74,20 +74,20 @@ public class BaseWebPage {
     }
 
     /**
-     * Wait for visibility of web element
+     * Ожидание видимости веб-элемента
      *
-     * @param element WebElement
-     * @return visible element
+     * @param element Веб-элемент
+     * @return видимый элемент
      */
     protected WebElement waitForElementVisible(WebElement element) {
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     /**
-     * Wait for clickability of web element
+     * Ожидание кликабельности веб-элемента
      *
-     * @param element WebElement
-     * @return clickable element
+     * @param element Веб-элемент
+     * @return кликабельный элемент
      */
     protected WebElement waitForElementClickable(WebElement element) {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
