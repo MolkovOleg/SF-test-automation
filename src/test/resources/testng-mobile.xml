@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Wikipedia Mobile Test Suite" parallel="false" verbose="1">
+    <test name="Wikipedia Mobile Tests">
+        <groups>
+            <run>
+                <include name="mobile"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="dev.molkov.test.tests.mobile.WikipediaMobileTests"/>
+        </classes>
+    </test>
+</suite>
