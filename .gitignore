@@ -41,7 +41,6 @@ nbdist/
 
 # Test output
 test-output/
-screenshots/
 *.png
 *.jpg
 
